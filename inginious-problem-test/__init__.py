@@ -55,7 +55,7 @@ class DisplayableTestProblem(TestProblem, DisplayableProblem):
         header = ParsableText(self.gettext(language, self._header), "rst",
                               translation=self.get_translation_obj(language))
         return template_helper.render("extra_test.html", template_folder=PATH_TO_TEMPLATES,
-                                      pid=self.get_id(), header=header)
+                                      pid=self.get_id())
 
     @classmethod
     def show_editbox(cls, template_helper, key, language):
@@ -68,4 +68,5 @@ class DisplayableTestProblem(TestProblem, DisplayableProblem):
         return ""
 
 def init(plugin_manager, course_factory, client, plugin_config):
+    plugin_manager.add_hook("javascript_header", lambda: os.path.join(PATH_TO_PLUGIN, "static", "extra_test.js"))
     course_factory.get_task_factory().add_problem_type(DisplayableTestProblem)
