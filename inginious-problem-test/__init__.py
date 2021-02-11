@@ -51,11 +51,11 @@ class DisplayableTestProblem(TestProblem, DisplayableProblem):
         return _("extra_test")
 
     def show_input(self, template_helper, language, seed):
-        """ Show MatchProblem """
+        """ Show Extra test """
         header = ParsableText(self.gettext(language, self._header), "rst",
                               translation=self.get_translation_obj(language))
         return template_helper.render("extra_test.html", template_folder=PATH_TO_TEMPLATES,
-                                      pid=self.get_id(), header=header)
+                                      inputId=self.get_id(), header=header)
 
     @classmethod
     def show_editbox(cls, template_helper, key, language):
