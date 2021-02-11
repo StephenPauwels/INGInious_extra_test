@@ -1,4 +1,4 @@
-# Inginious-problem-test
+# Plugin for extra-test
 
 import os
 

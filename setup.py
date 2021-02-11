@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="inginious-problem-test",
+    name="inginious-extra-test",
     version="0.1",
     description="Plugin to allow extra tests without extra input from student",
     packages=find_packages(),
