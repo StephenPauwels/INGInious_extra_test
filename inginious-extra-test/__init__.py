@@ -2,9 +2,12 @@
 
 import os
 
+from flask import send_from_directory
+
 from inginious.common.tasks_problems import Problem
 from inginious.frontend.task_problems import DisplayableProblem
 from inginious.frontend.parsable_text import ParsableText
+from inginious.frontend.pages.utils import INGIniousPage
 
 PATH_TO_PLUGIN = os.path.abspath(os.path.dirname(__file__))
 PATH_TO_TEMPLATES = os.path.join(PATH_TO_PLUGIN, "templates")
@@ -67,22 +70,15 @@ class DisplayableTestProblem(TestProblem, DisplayableProblem):
     def show_editbox_templates(cls, template_helper, key, language):
         return ""
 
-class StaticMockPage(object):
+class StaticMockPage(INGIniousPage):
     # TODO: Replace by shared static middleware and let webserver serve the files
     def GET(self, path):
-        if not os.path.abspath(PATH_TO_PLUGIN) in os.path.abspath(os.path.join(PATH_TO_PLUGIN, path)):
-            raise web.notfound()
-
-        try:
-            with open(os.path.join(PATH_TO_PLUGIN, "static", path), 'rb') as file:
-                return file.read()
-        except:
-            raise web.notfound()
+        return send_from_directory(os.path.join(PATH_TO_PLUGIN, "static"), path)
 
     def POST(self, path):
         return self.GET(path)
 
 def init(plugin_manager, course_factory, client, plugin_config):
-    plugin_manager.add_page('/plugins/extra_test/static/(.+)', StaticMockPage)
+    plugin_manager.add_page('/plugins/extra_test/static/<path:path>', StaticMockPage.as_view("extratestpage"))
     plugin_manager.add_hook("javascript_header", lambda: "/plugins/extra_test/static/extra_test.js")
     course_factory.get_task_factory().add_problem_type(DisplayableTestProblem)
