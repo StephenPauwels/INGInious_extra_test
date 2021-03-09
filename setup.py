@@ -5,7 +5,7 @@ setup(
     version="0.1",
     description="Plugin to allow extra tests without extra input from student",
     packages=find_packages(),
-    install_requires=["inginious>=0.6.dev0"],
+    install_requires=["inginious"],
     test_require=[],
     extras_require={},
     scripts=[],
