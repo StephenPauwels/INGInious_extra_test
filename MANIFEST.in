@@ -1,2 +1,2 @@
-recursive-include inginious-problem-test/templates *
-recursive-include inginious-problem-test/static *
+recursive-include inginious-extra-test/templates *
+recursive-include inginious-extra-test/static *
